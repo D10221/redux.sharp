@@ -8,7 +8,6 @@ namespace Redux
   using Reducer = Func<object, object, object>;
   public static class Reducers
   {        
-
     public static Reducer CombineReducer(IDictionary<string, Reducer> reducers)
     {
       return (_state, action) =>
