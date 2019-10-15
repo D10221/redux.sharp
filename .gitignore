@@ -1,0 +1,14 @@
+**/node_modules/*
+**/packages/*
+!ClientApp/packages/*
+**/build/*
+*.lock
+*.exe
+*.dll
+*.zip
+**/.vs/**
+**/.vscode/**
+**/bin/*
+**/obj/*
+WebSite1/[sS]cripts
+TestResult.xml
