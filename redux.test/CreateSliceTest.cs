@@ -9,7 +9,7 @@ namespace redux.test
 {
     using static Redux.Factories;
     using static Redux.Thunks;
-    using static Redux.Action;
+    using static Redux.Actions;
 
     public class CreateSliceTest
     {

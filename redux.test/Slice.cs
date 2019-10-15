@@ -42,7 +42,7 @@ namespace redux.test
     public object Reducer(object state, object action)
     {
       state = state ?? DefaultState;
-      if (Redux.Action.IsActionType(action, ActionTypes.Rename))
+      if (Redux.Actions.IsActionType(action, ActionTypes.Rename))
       {
         // Do somethihng with the state
         return new State
@@ -51,7 +51,7 @@ namespace redux.test
           Error = (state as IState)?.Error
         };
       }
-      if (Redux.Action.IsActionType(action, ActionTypes.Error))
+      if (Redux.Actions.IsActionType(action, ActionTypes.Error))
       {
         return new State
         {
@@ -64,7 +64,7 @@ namespace redux.test
     // Action Creator 
     public object Rename(string newName)
     {
-      return Redux.Action.CreateAction(ActionTypes.Rename, newName);
+      return Redux.Actions.CreateAction(ActionTypes.Rename, newName);
     }
 
     public ThunkFuncAsync RenameAsync(string name, int wait = 100)

@@ -13,7 +13,7 @@ namespace redux.test
     using Middleware = Func<(Dispatch dispatch, Func<object> getState), Func<Dispatch, Dispatch>>;
     using static Redux.Factories;
     using static Redux.Thunks;
-    using static Redux.Action;
+    using static Redux.Actions;
     using static Redux.Store;
 
     public class ThunkTest

@@ -6,7 +6,7 @@ using Dispatch = System.Func<object, object>;
 namespace redux.test
 {
   using Middleware = Func<(Dispatch dispatch, Func<object> getState), Func<Dispatch, Dispatch>>;
-  using static Redux.Action;
+  using static Redux.Actions;
   class TestMiddleware
   {
     /// <summary>

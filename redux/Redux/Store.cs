@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Subscribe = System.Func<System.Action, System.Action>;
+using Subscribe = System.Func<System.Action, System.IDisposable>;
 using Dispatch = System.Func<object, object>;
 using System.Linq;
 
@@ -11,6 +11,23 @@ namespace Redux
     using GetState = Func<Object>;
     public static class Store
     {
+        class Disposable : IDisposable
+        {
+            public static Disposable Create(System.Action action)
+            {
+                return new Disposable(action);
+            }
+            readonly System.Action _action;
+
+            public Disposable(System.Action action)
+            {
+                _action = action;
+            }
+            public void Dispose()
+            {
+                _action?.Invoke();
+            }
+        }
         public static Func<T, T> Compose<T>(IEnumerable<Func<T, T>> funcs)
         {
             return funcs.Aggregate((a, b) => x => a(b(x)));
@@ -35,7 +52,7 @@ namespace Redux
             var d = ApplyMiddleware(middleware)((dispatch, getState));
             return (dispatch: d, getState, subscribe);
         }
-        static readonly IAction INIT = Action.CreateAction("@@INIT");
+        static readonly IAction INIT = Actions.CreateAction("@@INIT");
         public static (Dispatch dispatch, GetState getState, Subscribe subscribe) CreateStore(
             Reducer reducer,
             object initialState
@@ -65,13 +82,13 @@ namespace Redux
                 return action;
             }
 
-            System.Action subscribe(System.Action action)
+            IDisposable subscribe(System.Action action)
             {
                 subscribers.Add(action);
-                return () =>
+                return Disposable.Create(() =>
                 {
                     subscribers.Remove(action);
-                };
+                });
             }
 
             object getState()
