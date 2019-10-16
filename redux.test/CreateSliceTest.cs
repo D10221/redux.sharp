@@ -7,9 +7,12 @@ using Xunit;
 
 namespace redux.test
 {
-    using static Redux.Factories;
+    using static Redux.Slices;
     using static Redux.Thunks;
     using static Redux.Actions;
+    using static Selectors;
+    using static Reducers;
+    using static Middlewares;
 
     public class CreateSliceTest
     {

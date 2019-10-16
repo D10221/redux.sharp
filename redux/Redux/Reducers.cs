@@ -7,7 +7,29 @@ namespace Redux
 {
   using Reducer = Func<object, object, object>;
   public static class Reducers
-  {        
+  {   
+    /// <summary>
+    /// Signatunre helper, untyped, & secures (state ?? initialState)
+    /// </summary>    
+    public static Reducer CreateReducer(Reducer reducer, object initialState)
+    {
+      return (state, action) =>
+      {
+        state = state ?? initialState;
+        return reducer(state, action);
+      };
+    }
+    /// <summary>
+    /// Typed signature helper & helps cast to T & secures (state ?? initialState)
+    /// </summary>    
+    public static Reducer CreateReducer<T>(T initialState, Func<T, object, T> reducer)
+    {
+      return (object state, object action) =>
+      {
+        state = state ?? initialState;
+        return reducer(state is T ? (T)state : default, action);
+      };
+    }     
     public static Reducer CombineReducer(IDictionary<string, Reducer> reducers)
     {
       return (_state, action) =>

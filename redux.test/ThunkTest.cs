@@ -11,10 +11,13 @@ namespace redux.test
     using Dispatch = Func<object, object>;
     using Reducer = Func<object, object, object>;
     using Middleware = Func<(Dispatch dispatch, Func<object> getState), Func<Dispatch, Dispatch>>;
-    using static Redux.Factories;
+    using static Redux.Utils;
     using static Redux.Thunks;
     using static Redux.Actions;
     using static Redux.Store;
+    using static Redux.Selectors;
+    using static Redux.Reducers;
+    using static Redux.Middlewares;
 
     public class ThunkTest
     {
@@ -24,7 +27,7 @@ namespace redux.test
             var Slice = Fty((string storeKey) =>
             {
                 (string Name, Exception Error) initialState = (Name: "", Error: null);
-                
+
                 var selector = CreateSelector(state => state as (string Name, Exception Error)?);
 
                 var actionTypes = (
@@ -76,7 +79,7 @@ namespace redux.test
             {
                 var (storeKey, selector, reducer, actions, actionTypes, initialState, _) = Slice("X");
 
-                var store = CreateStore(reducer, initialState, Thunks.Middleware);
+                var store = CreateStore(reducer, initialState, ApplyMiddleware(Thunks.Middleware));
 
                 store.dispatch(actions.Rename("Bob"));
                 selector(store.getState())?.Name.Should().Be("Bob");
@@ -102,8 +105,10 @@ namespace redux.test
             var store = CreateStore(
                 reducers.Combine(),
                 new { },
-                Thunks.Middleware,
-                Async.Middleware
+                ApplyMiddleware(
+                    Thunks.Middleware,
+                    Async.Middleware
+                )
             );
 
             Dispatch dispatch = store.dispatch;

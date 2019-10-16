@@ -6,7 +6,7 @@ using Xunit;
 namespace redux.test
 {
   using static Store;
-  using static Factories;
+  using static Reducers;
   using static Actions;
 
   public class SubscribeTest

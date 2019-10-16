@@ -4,13 +4,13 @@ using System;
 using Dispatch = System.Func<object, object>;
 namespace redux.test
 {
-  using ThunkFuncAsync = Func<Dispatch, Func<object>, Task<object>>;
-  using static Factories;
-  
-  /// <summary>
-  /// OO Store's Slice
-  /// </summary>
-  class Slice
+    using ThunkFuncAsync = Func<Dispatch, Func<object>, Task<object>>;
+    using static Selectors;
+
+    /// <summary>
+    /// OO Store's Slice
+    /// </summary>
+    class Slice
   {
     public interface IState
     {
