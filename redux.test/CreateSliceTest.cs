@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Newtonsoft.Json;
 using Redux;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,6 @@ using Xunit;
 namespace redux.test
 {
     using static Redux.Slices;
-    using static Redux.Actions;
     using static Redux.Selectors;
     using static Redux.Reducers;
     using static Redux.Middlewares;
@@ -28,11 +28,11 @@ namespace redux.test
         }
 
         [Fact]
-        public void ItCreatesSlice()
+        public void ItWorks()
         {
             var slice = CreateSlice(() =>
             {
-                var storeKey = "@myslice";
+                var storeKey = "myslice";
 
                 MyRecord initialState = new MyRecord();
 
@@ -116,16 +116,14 @@ namespace redux.test
             });
 
             {
-                var (storeKey, actionTypes, initialState, actions, selector, reducer, middleware)
-                  = slice();
-                storeKey.Should().Be("@myslice");
+                var (storeKey, actionTypes, initialState, actions, selector, reducer, middleware) = slice();
 
                 var store = CreateStore(
                     CombineReducer(new Dictionary<string, Reducer> { { storeKey, reducer } }),
                     null
                     );
 
-                var rename = BindActionCreator(actions.rename)(store.dispatch);            
+                var rename = BindActionCreator(actions.rename)(store.dispatch);
                 rename("?");
                 var (name, _, _, _) = selector(store.getState());
                 name.Should().Be("?");
@@ -141,8 +139,17 @@ namespace redux.test
 
                 f1("x3");
                 selector(store.getState()).Name.Should().Be("x3");
-                f1("x4");
-                selector(store.getState()).Name.Should().Be("x4");
+                f1("x");
+                selector(store.getState()).Name.Should().Be("x");
+
+                MyJsonSettings.Configure();
+                var json = JsonConvert.SerializeObject(store.getState());
+                var expected = @"{""myslice"":{""name"":""x"",""error"":null,""busy"":false,""success"":false}}";
+                json.Should().Be(expected);
+
+                var deserialized = JsonConvert.DeserializeAnonymousType(expected, new { myslice = new MyRecord() });
+                deserialized.myslice.Should().NotBeNull();
+                deserialized.myslice.Name.Should().Be("x");
             }
         }
     }
