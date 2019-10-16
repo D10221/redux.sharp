@@ -125,18 +125,24 @@ namespace redux.test
                     null
                     );
 
-                var rename = BindActionCreator(actions.rename)(store.dispatch);
-
-                var (rename1, rename2) = BindActionCreators(actions.rename, actions.rename)(store.dispatch);
-
+                var rename = BindActionCreator(actions.rename)(store.dispatch);            
                 rename("?");
                 var (name, _, _, _) = selector(store.getState());
                 name.Should().Be("?");
 
+                var (rename1, rename2) = BindActionCreators(actions.rename, actions.rename)(store.dispatch);
                 rename1("x1");
                 selector(store.getState()).Name.Should().Be("x1");
                 rename1("x2");
                 selector(store.getState()).Name.Should().Be("x2");
+
+                var moreActions = (actions.rename, actions.rename);
+                var (f1, f2) = BindActionCreators(moreActions)(store.dispatch);
+
+                f1("x3");
+                selector(store.getState()).Name.Should().Be("x3");
+                f1("x4");
+                selector(store.getState()).Name.Should().Be("x4");
             }
         }
     }

@@ -3,8 +3,6 @@ using Dispatch = System.Func<object, object>;
 
 namespace Redux
 {
-    using static Actions;
-
     public partial class ActionCreators
     {
         public static Func<Dispatch, ValueTuple<Func<T1, object>, Func<T2, object>>> BindActionCreators<T1, T2>(Func<T1, IAction> f1, Func<T2, IAction> f2)
