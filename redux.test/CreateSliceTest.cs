@@ -9,9 +9,11 @@ namespace redux.test
 {
     using static Redux.Slices;
     using static Redux.Actions;
-    using static Selectors;
-    using static Reducers;
-    using static Middlewares;
+    using static Redux.Selectors;
+    using static Redux.Reducers;
+    using static Redux.Middlewares;
+    using static Redux.Store;
+    using Reducer = Func<object, object, object>;
 
     public partial class CreateSliceTest
     {
@@ -31,7 +33,7 @@ namespace redux.test
             {
                 var storeKey = "@myslice";
 
-                MyReadonlyRecord initialState = new MyReadonlyRecord();
+                MyRecord initialState = new MyRecord();
 
                 var actionTypes = (
                 rename: $"{storeKey}/rename",
@@ -60,7 +62,7 @@ namespace redux.test
                         case IAction a when Equals(actionTypes.rename, a.Type):
                             {
                                 var (name, error, busy, success) = selector(state);
-                                return new MyReadonlyRecord(name);
+                                return (name: a.Payload as string, error, busy, success);
                             }
                         case IAction a when Equals(actionTypes.error, a.Type):
                             {
@@ -117,7 +119,14 @@ namespace redux.test
                   = slice();
                 storeKey.Should().Be("@myslice");
 
-                // TODO
+                var store = CreateStore(
+                    CombineReducer(new Dictionary<string, Reducer> { { storeKey, reducer } }),
+                    null
+                    );
+
+                store.dispatch(actions.rename("?"));
+                var (name, _, _, _ ) = selector(store.getState());                
+                name.Should().Be("?");
             }
         }
     }
