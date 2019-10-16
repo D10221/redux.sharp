@@ -20,14 +20,7 @@ namespace Redux
         {
             return new Action(type, payload);
         }
-        public static Func<T, IAction> CreateActionCreator<T>(object type)
-        {
-            return (payload) => CreateAction(type, payload);
-        }
-        public static Func<IAction> CreateActionCreator(object type)
-        {
-            return () => CreateAction(type);
-        }
+      
         public static bool IsActionType(object action, object actionType)
         {
             return object.Equals((action as IAction)?.Type, actionType);

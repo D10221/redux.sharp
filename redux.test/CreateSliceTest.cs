@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
-
 namespace redux.test
 {
     using static Redux.Slices;
@@ -13,6 +12,8 @@ namespace redux.test
     using static Redux.Reducers;
     using static Redux.Middlewares;
     using static Redux.Store;
+    using static Redux.ActionCreators;
+
     using Reducer = Func<object, object, object>;
 
     public partial class CreateSliceTest
@@ -124,9 +125,18 @@ namespace redux.test
                     null
                     );
 
-                store.dispatch(actions.rename("?"));
-                var (name, _, _, _ ) = selector(store.getState());                
+                var rename = BindActionCreator(actions.rename)(store.dispatch);
+
+                var (rename1, rename2) = BindActionCreators(actions.rename, actions.rename)(store.dispatch);
+
+                rename("?");
+                var (name, _, _, _) = selector(store.getState());
                 name.Should().Be("?");
+
+                rename1("x1");
+                selector(store.getState()).Name.Should().Be("x1");
+                rename1("x2");
+                selector(store.getState()).Name.Should().Be("x2");
             }
         }
     }
