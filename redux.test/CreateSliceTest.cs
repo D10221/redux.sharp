@@ -8,13 +8,12 @@ using Xunit;
 namespace redux.test
 {
     using static Redux.Slices;
-    using static Redux.Thunks;
     using static Redux.Actions;
     using static Selectors;
     using static Reducers;
     using static Middlewares;
 
-    public class CreateSliceTest
+    public partial class CreateSliceTest
     {
         class Api
         {
@@ -32,7 +31,7 @@ namespace redux.test
             {
                 var storeKey = "@myslice";
 
-                (string name, Exception error, bool busy, bool success) initialState = (name: null, error: null, busy: false, success: false);
+                MyReadonlyRecord initialState = new MyReadonlyRecord();
 
                 var actionTypes = (
                 rename: $"{storeKey}/rename",
@@ -61,7 +60,7 @@ namespace redux.test
                         case IAction a when Equals(actionTypes.rename, a.Type):
                             {
                                 var (name, error, busy, success) = selector(state);
-                                return (name: (string)a.Payload, error, busy, success);
+                                return new MyReadonlyRecord(name);
                             }
                         case IAction a when Equals(actionTypes.error, a.Type):
                             {
