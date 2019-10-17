@@ -11,7 +11,7 @@ const middleware = [thunk];
 declare const __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: any;
 const c =
   process.env.NODE_ENV !== "production" &&
-  window !== void 0 &&
+  typeof window !== "undefined" &&
   __REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     ? __REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
         // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...

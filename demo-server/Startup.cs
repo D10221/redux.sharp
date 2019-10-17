@@ -22,11 +22,11 @@ namespace demo_server
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-
+            // services.AddRazorPages();
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "ClientApp/build";
+                configuration.RootPath = "modules/ClientApp/build";
             });
         }
 
@@ -55,17 +55,19 @@ namespace demo_server
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
+                
+                // endpoints.MapRazorPages();
             });
 
             app.UseSpa(spa =>
             {
-                spa.Options.SourcePath = "ClientApp";
-
+                spa.Options.SourcePath = "modules/ClientApp";               
                 if (env.IsDevelopment())
                 {
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
+
         }
     }
 }
