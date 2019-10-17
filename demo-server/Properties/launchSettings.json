@@ -1,10 +1,10 @@
-﻿{
+{
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:16697",
-      "sslPort": 44363
+      "applicationUrl": "http://localhost:21149",
+      "sslPort": 44355
     }
   },
   "profiles": {
@@ -15,13 +15,12 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "demo_server": {
+    "ReactJSDotNetBasic": {
       "commandName": "Project",
-      "launchBrowser": true,
-      "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "applicationUrl": "http://localhost:5001"
     }
   }
 }
