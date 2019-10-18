@@ -1,13 +1,15 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import store from './store';
-import App from './App';
+/// <reference path="./globals.d.ts" />
+import "./styles.css";
+import * as React from "react";
+import { render } from "react-snapshot";
+import { Provider } from "react-redux";
+import store from "./store";
+import App from "./App";
 
-ReactDOM.render(
+render(
     <Provider store={store}>
         <App/>
     </Provider>,
-    document.getElementById('root'));
+    document.getElementById("root"));
 
-// import('./registerServiceWorker').then(({default: registerServiceWorker})=> registerServiceWorker());
+// import("./registerServiceWorker").then(({default: registerServiceWorker})=> registerServiceWorker());

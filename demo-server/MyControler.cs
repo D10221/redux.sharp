@@ -13,7 +13,7 @@ namespace MyApp
         public async Task<IActionResult> Get()
         {
             var html = await System.IO.File.ReadAllTextAsync(
-                    Path.Combine(Directory.GetCurrentDirectory(), "modules/app/build/index.html")
+                    Path.Combine(Directory.GetCurrentDirectory(), "modules/app/build/body.html")
                 );
 
             var state = MyState.Serialize(
