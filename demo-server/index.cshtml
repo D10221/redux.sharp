@@ -1,2 +1,2 @@
-@page
-@Html.Raw(ViewBag.html)
+@model (string html, string state)
+@Html.Raw(this.Model.html)
