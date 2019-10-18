@@ -22,8 +22,9 @@ namespace MyApp
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(
-                Path.Combine(Directory.GetCurrentDirectory(), "modules/app/build")
-              )
+                    Path.Combine(Directory.GetCurrentDirectory(), "modules/app/build")
+                ),
+                // RequestPath= "/**/(*.js|*.ico|*.jpg|*.png|*.json)",                
             });
             app.UseRouting();
             app.UseEndpoints(endpoints =>
@@ -31,6 +32,6 @@ namespace MyApp
                 endpoints.MapDefaultControllerRoute();
                 // endpoints.MapGet("/", Handlers.ServeApp("modules/app/build/index.html"));
             });
-        }        
+        }
     }
 }

@@ -1,12 +1,14 @@
 const webpack = require("webpack");
-const path = require("path");
+const { resolve } = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-
+const WebpackPwaManifest = require("webpack-pwa-manifest");
+const outputPath = resolve(__dirname, "build");
 const config = {
   entry: "./src/index.tsx",
   output: {
-    path: path.resolve(__dirname, "build"),
+    path: outputPath,
     filename: "[name].js",
+    publicPath: "",
   },
   module: {
     rules: [
@@ -45,23 +47,41 @@ const config = {
     extensions: [".js", ".jsx", ".tsx", ".ts"],
   },
   devServer: {
-    contentBase: "./dist",
+    contentBase: "./build",
   },
-  // see: https://github.com/jantimon/html-webpack-plugin#options
-  // Todo: add $HOME_PAGE or $ROOT site to script src
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, "public/body.html"), //require('html-webpack-template'),
+      template: resolve(__dirname, "public/body.html"), //require('html-webpack-template'),
       inject: true,
       appMountId: "root",
-      filename: "body.html",
+      filename: "body.html"
     }),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, "public/index.html"), //require('html-webpack-template'),
+      template: resolve(__dirname, "public/head.html"), //require('html-webpack-template'),
       inject: true,
-      appMountId: "root",
-      filename: "index.html",
+      filename: "head.html",
+      favicon: "public/favicon.ico",
+      excludeChunks: ['runtime', 'vendors', 'main'],
     }),
+    // TODO: include index.html ... for dev
+    new WebpackPwaManifest({
+      filename: "manifest.json",
+      name: 'MyApp',
+      short_name: 'MyApp',
+      description: 'MyApp !',
+      background_color: '#ffffff',
+      // crossorigin: 'use-credentials', //can be null, use-credentials or anonymous
+      icons: [
+        {
+          src: resolve(__dirname, 'public/logo512.png'),
+          sizes: [64, 32, 24, 16] // multiple sizes
+        },
+        {
+          src: resolve('public/logo512.png'),
+          size: '1024x1024' // you can also use the specifications pattern
+        }
+      ]
+    })
   ],
   optimization: {
     runtimeChunk: "single",
