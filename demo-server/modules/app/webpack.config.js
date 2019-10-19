@@ -51,17 +51,24 @@ const config = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: resolve(__dirname, "public/body.html"), //require('html-webpack-template'),
+      template: resolve(__dirname, "public/body.html"), 
       inject: true,
       appMountId: "root",
       filename: "body.html"
     }),
     new HtmlWebpackPlugin({
-      template: resolve(__dirname, "public/head.html"), //require('html-webpack-template'),
+      template: resolve(__dirname, "public/head.html"), 
       inject: true,
       filename: "head.html",
       favicon: "public/favicon.ico",
-      excludeChunks: ['runtime', 'vendors', 'main'],
+      excludeChunks: ['runtime', 'vendors', 'main'],      
+    }),
+    new HtmlWebpackPlugin({
+      template: require('html-webpack-template'),
+      filename: "index.html",
+      favicon: "public/favicon.ico",
+      appMountId: "root",
+      inject: false
     }),
     // TODO: include index.html ... for dev
     new WebpackPwaManifest({
