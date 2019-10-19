@@ -1,0 +1,20 @@
+# Go to github and add a $TOKEN with GPR read/write access
+# nuget add source
+nuget source Add -Name "GitHub" -Source "https://nuget.pkg.github.com/D10221/index.json"  
+# Set api key 
+nuget setApiKey $TOKEN -Source "https://nuget.pkg.github.com/D10221/index.json"
+# Push package
+nuget push "redux.sharp.nupkg" -Source "GitHub"
+# Install package
+nuget install redux.sharp # doesn't work
+nuget install redux.sharp -pre # because of aplha
+dotnet add package redux.sharp # doesn't work
+# Add nuget.config or dotnet doesn't find
+    <add key="GitHub" value="https://nuget.pkg.github.com/D10221/index.json" />
+# also doesn't work because of 401:unauthorized
+dotnet add  package redux.sharp \
+    -s "https://nuget.pkg.github.com/D10221/index.json"  
+# Add package without download
+dotnet add  package redux.sharp -n # notice -n
+# edit package version manually 1.0.0-alpha
+# now it should work ?
