@@ -29,14 +29,9 @@ namespace MyApp
                 FileProvider = new PhysicalFileProvider(
                     Path.Combine(baseDir, "modules/app/build")
                 ),
-                // RequestPath= "/**/(*.js|*.ico|*.jpg|*.png|*.json)",                
             });
             app.UseRouting();
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapDefaultControllerRoute();
-                // endpoints.MapGet("/", Handlers.ServeApp("modules/app/build/index.html"));
-            });
+            app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
             logger.Log(LogLevel.Information, "BaseDir: '{0}'", baseDir);
         }
     }

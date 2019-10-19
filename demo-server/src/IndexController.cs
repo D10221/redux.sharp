@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace MyApp
 {
-    [Route("/")]
+    [Route("{**args}")]
     public class IndexController : Controller
     {
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Index(object[] args = null)
         {
             var html = await System.IO.File.ReadAllTextAsync(
                     Path.Combine(Directory.GetCurrentDirectory(),
