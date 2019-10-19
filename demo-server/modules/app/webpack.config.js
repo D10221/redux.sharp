@@ -3,12 +3,29 @@ const { resolve } = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const WebpackPwaManifest = require("webpack-pwa-manifest");
 const outputPath = resolve(__dirname, "build");
+/**
+ * @type {import("webpack").Configuration}
+ */
 const config = {
   entry: "./src/index.tsx",
   output: {
-    path: outputPath,
     filename: "[name].js",
+    path: outputPath,
+    chunkFilename: '[name].js',
     publicPath: "/",
+  },
+  optimization: {
+    runtimeChunk: "single",
+    splitChunks: {
+      chunks: "all",
+      cacheGroups: {
+        vendor: {
+          test: /[\\\/]node_modules[\\\/]/,
+          name: "vendors",
+          chunks: "all",
+        },
+      },
+    },
   },
   module: {
     rules: [
@@ -90,18 +107,11 @@ const config = {
       ]
     })
   ],
-  optimization: {
-    runtimeChunk: "single",
-    splitChunks: {
-      cacheGroups: {
-        vendor: {
-          test: /[\\\/]node_modules[\\\/]/,
-          name: "vendors",
-          chunks: "all",
-        },
-      },
-    },
-  },
+  externals: {
+    "react": "React",
+    "react-dom": "ReactDOM",
+    "redux": "Redux"
+  }
 };
 
 module.exports = config;
