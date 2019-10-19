@@ -13,8 +13,7 @@ namespace MyApp
             };
         }
         public static object User(){
-            return new { Name = "Bob" };
-            
+            return new { Name = "Bob" };            
         }
         public static string Serialize(object o, bool encoded = false)
         {            
