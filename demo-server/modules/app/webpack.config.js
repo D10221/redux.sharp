@@ -8,7 +8,7 @@ const config = {
   output: {
     path: outputPath,
     filename: "[name].js",
-    publicPath: "",
+    publicPath: "/",
   },
   module: {
     rules: [
