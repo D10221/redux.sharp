@@ -1,7 +1,7 @@
 /// <reference path="./globals.d.ts" />
 import "./styles.css";
 import * as React from "react";
-import { render } from "react-snapshot";
+import { render } from "react-dom";
 import { Provider } from "react-redux";
 import store from "./store";
 import App from "./App";

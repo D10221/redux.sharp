@@ -9,7 +9,7 @@
   "scripts": {
     "clean": "rimraf build ",
     "build": "yarn clean && webpack -d --mode development",
-    "build-prod": "webpack -p --mode production",
+    "build:prod": "yarn clean && webpack -p --mode production",
     "start": "webpack-dev-server --hot --mode development"
   },
   "dependencies": {
@@ -21,7 +21,6 @@
     "react-router": "5.1.2",
     "react-router-dom": "5.1.2",
     "react-scripts": "^3.2.0",
-    "react-snapshot": "^1.3.0",
     "redux": "4.0.4",
     "redux-thunk": "2.3.0"
   },
