@@ -1,8 +1,10 @@
 import React, { ComponentType, SFC, useState, useEffect } from "react";
 type DefaultModule<T> = { default: T };
-const Async = <T = {}>(
-  importComponent: () => Promise<DefaultModule<ComponentType<T>>>,
+/** */
+const AsyncComponent = <T = {}>(
   loading?: ComponentType<T> | null | undefined,
+) => (
+  importComponent: () => Promise<DefaultModule<ComponentType<T>>>,
 ): SFC<T> => {
   return props => {
     loading = loading || (() => null);
@@ -16,4 +18,4 @@ const Async = <T = {}>(
   };
 };
 /** */
-export default Async;
+export default AsyncComponent;

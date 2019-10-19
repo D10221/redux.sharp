@@ -1,4 +1,4 @@
-export const STORE_KEY = "@user";
+export const STORE_KEY = "user";
 
 function parseCookie(cookie: string) {
   return cookie.split(";").reduce(

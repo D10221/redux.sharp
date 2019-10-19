@@ -2,13 +2,22 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MyApp
 {
-    [Route("/api")]
+    [Route("/api/{route?}")]
     public class ApiController : Controller
     {
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get(string route)
         {
-            return Json(MyState.GetState());
+            var state = MyState.GetState();
+            if (string.IsNullOrWhiteSpace(route))
+            {
+                return Json(state);
+            }
+            if (!state.ContainsKey(route))
+            {
+                return Json(null);
+            }            
+            return Json(state[route]);
         }
     }
 }

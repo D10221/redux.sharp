@@ -10,7 +10,8 @@
     "clean": "rimraf build ",
     "build": "yarn clean && webpack -d --mode development",
     "build:prod": "yarn clean && webpack -p --mode production",
-    "start": "webpack-dev-server --hot --mode development"
+    "start": "webpack-dev-server --hot --mode development",
+    "watch": "yarn clean && webpack -d --mode development --watch"
   },
   "dependencies": {
     "history": "4.10.1",
