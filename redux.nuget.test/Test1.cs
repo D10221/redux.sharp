@@ -9,7 +9,7 @@ namespace redux.nuget.test
     public class Test1
     {
         [Fact]
-        public void TestMethod1()
+        public void Fact1()
         {
             var store = CreateStore(
                 (state, action) => state,
