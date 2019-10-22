@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Linq;
-using Dispatch = System.Func<object, object>;
+using Redux;
 
 namespace redux.test
 {
-    using Middleware = Func<(Dispatch dispatch, Func<object> getState), Func<Dispatch, Dispatch>>;
     using static Redux.Actions;
     class TestMiddleware
   {

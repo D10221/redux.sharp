@@ -10,6 +10,10 @@ namespace Redux
         {
             return funcs.Aggregate((a, b) => x => a(b(x)));
         }
+        public static Dispatch Compose(IEnumerable<Dispatch> dispatches)
+        {
+            return dispatches.Aggregate((a, b) => x => a(b(x)));
+        }
         /// <summary>
         ///  Inline Factory Signature helper
         /// </summary>    

@@ -12,9 +12,7 @@ namespace redux.test
     using static Redux.Reducers;
     using static Redux.Middlewares;
     using static Redux.Store;
-    using static Redux.ActionCreators;
-
-    using Reducer = Func<object, object, object>;
+    using static Redux.ActionCreators;    
 
     public partial class CreateSliceTest
     {

@@ -6,8 +6,6 @@ using System;
 
 namespace redux.test
 {
-    using Dispatch = Func<object, object>;
-    using Reducer = Func<object, object, object>;
     using static Reducers;
     using static Middlewares;
 

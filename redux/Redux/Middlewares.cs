@@ -1,20 +1,16 @@
 using System;
 using System.Linq;
-using Dispatch = System.Func<object, object>;
-using GetState = System.Func<object>;
-using Subscribe = System.Func<System.Action, System.IDisposable>;
 
 namespace Redux
 {
-    using Middleware = Func<(Dispatch dispatch, Func<object> getState), Func<Dispatch, Dispatch>>;
-    using Enhancer = Func<(Dispatch dispatch, GetState getState, Subscribe), (Dispatch dispatch, GetState getState, Subscribe susbscribe)>;
+    // using Middleware = Func<(Dispatch dispatch, Func<object> getState), Func<Dispatch, Dispatch>>;
     using static Redux.Utils;
     public class Middlewares
     {
 
         /// <summary>
         /// Signature helper
-        public static Enhancer ApplyMiddleware(params Middleware[] middleware)
+        public static Enhance ApplyMiddleware(params Middleware[] middleware)
         {
             return store =>
             {
@@ -31,7 +27,7 @@ namespace Redux
         public static Middleware CreateMiddleware(Middleware f)
         {
             return f;
-        }       
+        }
 
     }
 }

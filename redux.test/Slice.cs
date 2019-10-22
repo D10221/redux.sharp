@@ -1,10 +1,8 @@
 using Redux;
 using System.Threading.Tasks;
 using System;
-using Dispatch = System.Func<object, object>;
 namespace redux.test
 {
-    using ThunkFuncAsync = Func<Dispatch, Func<object>, Task<object>>;
     using static Selectors;
 
     /// <summary>
@@ -67,7 +65,7 @@ namespace redux.test
       return Redux.Actions.CreateAction(ActionTypes.Rename, newName);
     }
 
-    public ThunkFuncAsync RenameAsync(string name, int wait = 100)
+    public AsyncThunk RenameAsync(string name, int wait = 100)
     {
       return async (dispatch, getState) =>
       {

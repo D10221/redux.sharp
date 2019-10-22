@@ -1,14 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Dispatch = System.Func<object, object>;
-using GetState = System.Func<object>;
-using Subscribe = System.Func<System.Action, System.IDisposable>;
 
 namespace Redux
 {
-    using Reducer = Func<object, object, object>;
-    using Enhance = Func<(Dispatch dispatch, GetState getState, Subscribe), (Dispatch dispatch, GetState getState, Subscribe susbscribe)>;
-
+    
     public static class Store
     {
         public static (Dispatch dispatch, GetState getState, Subscribe subscribe) CreateStore(

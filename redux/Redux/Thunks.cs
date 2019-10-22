@@ -1,26 +1,20 @@
 ﻿using System;
-using Dispatch = System.Func<object, object>;
 using System.Threading.Tasks;
 
 namespace Redux
 {
-    using Middleware = Func<(Dispatch dispatch, Func<object> getState), Func<Dispatch, Dispatch>>;
-    using Thunk = Func<Dispatch, Func<object>, object>;
-    using AsyncThunkFunc = Func<Dispatch, Func<object>, Task<object>>;
+    public delegate object Thunk(Dispatch dispatch, GetState getState);
+    public delegate Task<object> AsyncThunk(Dispatch dispatch, GetState getState);
+   
     public class Thunks
     {
         public static Middleware Middleware = store => next => action =>
            {
-               if (action is IAction) return next(action);
-
-               var thunk = action as Thunk;
-               if (thunk != null)
-               {
-                   object ret = thunk(store.dispatch, store.getState);
-                   return next(thunk(store.dispatch, store.getState));
-               }
-
-               return next(action);
+               switch(action){
+                   case Thunk thunk : return next(thunk(store.dispatch, store.getState));
+                   case AsyncThunk thunk: return next(thunk(store.dispatch, store.getState));
+                   default: return next(action);
+               }               
            };
         ///<summary>
         ///  Signature helper
@@ -32,7 +26,7 @@ namespace Redux
         ///<summary>
         ///  Signature helper
         ///</summary>
-        public static AsyncThunkFunc AsyncThunk(AsyncThunkFunc thunk)
+        public static AsyncThunk AsyncThunk(AsyncThunk thunk)
         {
             return thunk;
         }
@@ -46,7 +40,7 @@ namespace Redux
         ///<summary>
         ///  Signature helper
         ///</summary>
-        public static Func<T, AsyncThunkFunc> AsyncThunkFty<T>(Func<T, AsyncThunkFunc> f)
+        public static Func<T, AsyncThunk> AsyncThunkFty<T>(Func<T, AsyncThunk> f)
         {
             return f;
         }

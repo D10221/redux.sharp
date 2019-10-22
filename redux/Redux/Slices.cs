@@ -1,11 +1,10 @@
 using System;
-using Dispatch = System.Func<object, object>;
+// using Dispatch = System.Func<object, object>;
 
 namespace Redux
 {
-    using Middleware = Func<(Dispatch dispatch, Func<object> getState), Func<Dispatch, Dispatch>>;
-    using Reducer = Func<object, object, object>;
-    
+    //using Middleware = Func<(Dispatch dispatch, Func<object> getState), Func<Dispatch, Dispatch>>;
+        
     public class Slices
     {
         /// <summary>

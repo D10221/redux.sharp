@@ -5,7 +5,6 @@ using System.Diagnostics;
 
 namespace Redux
 {
-    using Reducer = Func<object, object, object>;
     public static class Reducers
     {
         /// <summary>
@@ -53,9 +52,9 @@ namespace Redux
                 return state;
             };
         }
-        public static Reducer Combine(this IDictionary<string, Reducer> reducers)
+        public static Reducer Combine(this IDictionary<string, Reducer> reducers,  Func<object, IDictionary<string, object>> toDictionary = null )
         {
-            return CombineReducer(reducers);
+            return CombineReducer(reducers, toDictionary);
         }
         public static IDictionary<string, object> ToDictionary(object state)
         {

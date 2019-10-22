@@ -4,13 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
-using Dispatch = System.Func<object, object>;
 
 namespace redux.test
 {
-    using Dispatch = Func<object, object>;
-    using Reducer = Func<object, object, object>;
-    using Middleware = Func<(Dispatch dispatch, Func<object> getState), Func<Dispatch, Dispatch>>;
     using static Redux.Utils;
     using static Redux.Thunks;
     using static Redux.Actions;
@@ -102,6 +98,7 @@ namespace redux.test
             {
                 [slice.StoreKey] = slice.Reducer,
             };
+
             var store = CreateStore(
                 reducers.Combine(),
                 new { },
@@ -122,7 +119,7 @@ namespace redux.test
             state.Should().NotBeNull();
             state.Name.Should().Be(slice.DefaultState.Name);
 
-            var _next = await (dispatch(slice.RenameAsync("bob")) as Task<object>);
+            var _next =await  (dispatch(slice.RenameAsync("bob")) as Task<object>);
             getState().Name.Should().Be("bob");
         }
     }
