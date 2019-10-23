@@ -119,7 +119,7 @@ namespace redux.test
             state.Should().NotBeNull();
             state.Name.Should().Be(slice.DefaultState.Name);
 
-            var _next =await  (dispatch(slice.RenameAsync("bob")) as Task<object>);
+            var _next = await (dispatch(slice.RenameAsync("bob")) as Task<object>);
             getState().Name.Should().Be("bob");
         }
     }
