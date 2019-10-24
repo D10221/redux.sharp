@@ -8,18 +8,22 @@ namespace server.Database
     using System.Linq;
     using System.Threading.Tasks;
 
+    public delegate Task<T> Scalar<T>(object param);
+
+    public delegate Scalar<T> MakeScalar<T>(IDbConnection connection, IDbTransaction transaction);
+
+    public delegate Task<T> MakeScalarQuery<T>(string query, object param);
+
+    public delegate Task<T> MakeScalarQuery<T, P>(string query, P param);
+    
     public class Users
     {
         public static object D(IDbConnection connection, IDbTransaction transaction = null)
         {
 
-            Func<object, Task<T>> Scalar<T>(string query)
+            Scalar<T> Scalar<T>(string query)
             {
-                return async (args) =>
-                {
-                    var id = (await connection.ExecuteScalarAsync<T>(query, param: args, transaction: transaction));
-                    return id;
-                };
+                return (args) => connection.ExecuteScalarAsync<T>(query, param: args, transaction: transaction);
             };
 
             Func<object, Task<IEnumerable<T>>> Query<T>(string query)

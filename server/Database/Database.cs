@@ -30,15 +30,16 @@ namespace server.Database
                 await ExecuteFile(cnx)(Combine(Base, "Contact.Create.sqlite"));
 
                 var users = Users.D(cnx);
-                if (!(await users.all()).Any())
-                {
-                    await users.add(new User
-                    {
-                        Name = "admin",
-                        Password = "password",
-                        Roles = "admin"
-                    });
-                }
+                
+                // if (!(await users.all()).Any())
+                // {
+                //     await users.add(new User
+                //     {
+                //         Name = "admin",
+                //         Password = "password",
+                //         Roles = "admin"
+                //     });
+                // }
             }
 
         }
