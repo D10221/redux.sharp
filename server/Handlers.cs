@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -9,16 +9,16 @@ using static System.Text.Json.JsonSerializer;
 
 namespace server
 {
-    class Routes
+    class Handlers
     {
-        public static RequestDelegate ServeIt(string filePath)
+        public static RequestDelegate ServeFile(string filePath)
         {
             return async ctx =>
                         await ctx.Response.WriteAsync(
-                            await File.ReadAllTextAsync(filePath));
+                            await System.IO.File.ReadAllTextAsync(filePath));
             ;
         }
-        public static (string, RequestDelegate) Route(IServiceProvider services)
+        public static (string, RequestDelegate) ServeInfo(IServiceProvider services)
         {
             var config = services.GetService<IConfiguration>();
             var routeParams = "{*args}";

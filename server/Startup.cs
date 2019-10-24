@@ -24,19 +24,22 @@ namespace server
             app.UseEndpoints(endpoints =>
             {
                 {
-                    endpoints.MapGet("/", Routes.ServeIt(Path.Combine(
+                    // Serve App when Nothing asked for ... 
+                    endpoints.MapGet("/", Handlers.ServeFile(Path.Combine(
                                     Directory.GetCurrentDirectory(),
                                     "wwwroot",
                                     "index.html")));
-                }
+                }                
                 {
+                    // serve '/api'
                     var apiBase = "/api";
-                    var (routeParams, route) = Routes.Route(app.ApplicationServices);
-                    var routePath = $"{apiBase}/{routeParams}";
-                    logger.LogInformation($"path: {routePath}");
+                    var (routeParams, route) = Handlers.ServeInfo(app.ApplicationServices);
+                    var routePath = $"{apiBase}/info/{routeParams}";
+                    logger.LogInformation($"Serving: {routePath}");
                     endpoints.Map(routePath, route);
                 }
             });
+            // Server:/.*
             app.UseStaticFiles();
         }
     }
