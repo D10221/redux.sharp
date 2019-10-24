@@ -1,5 +1,7 @@
+using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -15,21 +17,27 @@ namespace server
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             var logger = app.ApplicationServices.GetService<ILogger<Startup>>();
-
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            var isDev = env.IsDevelopment();
+            if (isDev) app.UseDeveloperExceptionPage();
             app.UseRouting();
-            app.Use(LoggerMiddleware.CreateMiddleware(app.ApplicationServices));
+            app.Use(LoggerMiddleware.CreateMiddleware(app.ApplicationServices));            
             app.UseEndpoints(endpoints =>
             {
-                var apiBase = "/api";
-                var (routeParams, route) = Routes.Route(app.ApplicationServices);
-                var routePath = $"{apiBase}/{routeParams}";
-                logger.LogInformation($"path: {routePath}");
-                endpoints.Map(routePath, route);
+                {
+                    endpoints.MapGet("/", Routes.ServeIt(Path.Combine(
+                                    Directory.GetCurrentDirectory(),
+                                    "wwwroot",
+                                    "index.html")));
+                }
+                {
+                    var apiBase = "/api";
+                    var (routeParams, route) = Routes.Route(app.ApplicationServices);
+                    var routePath = $"{apiBase}/{routeParams}";
+                    logger.LogInformation($"path: {routePath}");
+                    endpoints.Map(routePath, route);
+                }
             });
+            app.UseStaticFiles();
         }
     }
 }

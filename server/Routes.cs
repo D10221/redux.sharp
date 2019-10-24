@@ -11,6 +11,13 @@ namespace server
 {
     class Routes
     {
+        public static RequestDelegate ServeIt(string filePath)
+        {
+            return async ctx =>
+                        await ctx.Response.WriteAsync(
+                            await File.ReadAllTextAsync(filePath));
+            ;
+        }
         public static (string, RequestDelegate) Route(IServiceProvider services)
         {
             var config = services.GetService<IConfiguration>();
