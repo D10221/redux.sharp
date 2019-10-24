@@ -13,3 +13,4 @@
 WebSite1/[sS]cripts
 TestResult.xml
 *lock.json
+*.db

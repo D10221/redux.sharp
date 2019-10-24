@@ -1,0 +1,6 @@
+create TABLE if not exists User (
+    ID int PRIMARY KEY,
+    Name TEXT Not null,
+    Password TEXT Not Null,
+    Roles TEXT Not Null
+)

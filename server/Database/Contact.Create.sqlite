@@ -1,0 +1,7 @@
+create TABLE if not exists Contact (
+    id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    tel TEXT NOT NULL,
+    email TEXT NOT NULL,
+    address TEXT NOT NULL
+)

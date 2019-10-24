@@ -1,7 +1,6 @@
 using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -10,9 +9,9 @@ namespace server
 {
     public class Startup
     {
-        public void ConfigureServices(IServiceCollection services)
+        public async void ConfigureServices(IServiceCollection services)
         {
-
+            await server.Database.Context.Setup();
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
