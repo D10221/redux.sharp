@@ -29,5 +29,16 @@ namespace dapper.fun
                 return r.FirstOrDefault();
             };
         }
+        public static Select<R> QuerySingle<R>(string query)
+        {
+            return (con, tran) => async () => {
+                var r = ( await Query<R>(query)(con, tran)());
+                if(r.Count() > 1) {
+                    // TODO: hides querie intention ? 
+                    throw new Exception("You are expectin 1 but got many");
+                }
+                return r.FirstOrDefault();
+            };
+        }
     }
 }

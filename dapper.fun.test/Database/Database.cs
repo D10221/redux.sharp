@@ -24,6 +24,6 @@ namespace dapper.fun.test
         public static IDbConnection Connect()
         {
             return new SQLiteConnection("Data Source=" + DBPath);
-        }
+        }        
     }
 }
