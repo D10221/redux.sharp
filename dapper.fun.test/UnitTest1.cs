@@ -111,6 +111,36 @@ namespace dapper.fun.test
                 test(await QuerySingle<Values>(query)(connection, null)());
             }
         }
+        
+        [TestMethod]
+        public async Task TransformsParameters()
+        {
+            Database.Drop();
+            using (var connection = Database.Connect())
+            {
+                Select<int, User> Find = Transform(
+                                QuerySingle<object, User>(@"
+                -- SQLite
+                WITH x AS (values(1,'bob','password', 'admin')) 
+                select 
+                    x.Column1 as ID,
+                    x.COlumn2 as Name,
+                    x.Column3 as Password,
+                    x.COlumn4 as Roles
+                from x
+                WHERE id = @ID
+                "),
+                  transform: (int id) => new { ID = id }
+                );
+                var find = Connect(Find, connection);
+                var found = await find(1);
+                var subject = found.Should();
+                subject.NotBeNull();
+                subject.BeOfType<User>();
+                found.Name.Should().Be("bob");
+            }
+
+        }
     }
 
 }

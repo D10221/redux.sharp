@@ -15,5 +15,8 @@ namespace dapper.fun
         {
             return transform => query => input => select(transform(input)(query));
         }
+        public static Select<O, R> Transform<P, R, O>(Select<P, R> select, Func<O, P> transform){
+            return (con, tran) => (value) => select(con, tran)(transform(value));
+        }
     }
 }

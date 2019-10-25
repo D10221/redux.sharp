@@ -6,19 +6,21 @@ using dapper.fun;
 namespace server.Database
 {
     using static dapper.fun.Operations;
+    using static dapper.fun.Queries;
+    using static dapper.fun.Transforms;
 
     public class Users
     {
         public static object Data()
         {
-            var update = Exec<User>(@"
-                    UPDATE User 
-                        SET Name = @Name,
-                            Password = @Password,
-                            Roles = @Roles
-                    where id = @id
-                ");
-            var find = Query<int, User>(@"select * from User where id = @ID");
+            Select<int> create = Exec(User.Scripts.Create);
+            Select<User, int> update = Exec<User>(User.Scripts.Update);
+
+            Select<int, User> find = Transform(
+                QuerySingle<object, User>(@"select * from User where id = @ID"),
+                (int ID) => new { ID }
+            );
+            
             var add = Scalar<User, int>(@"
                     insert into USER (
                         Name, Password, Roles
@@ -28,7 +30,7 @@ namespace server.Database
                     SELECT last_insert_rowid();
                 ");
 
-            var all = Query<User>("select * from user");                      
+            var all = Query<User>("select * from user");
             var delete = Exec(@"delete User where id = @id");
             var count = Scalar<int>("select count(*) from User ");
 
