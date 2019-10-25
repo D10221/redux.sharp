@@ -12,11 +12,11 @@ namespace dapper.fun
 
         public static Func<string, Select<IEnumerable<R>>> Where<R>(string sql)
         {
-            return Change(Query<R>)(WithWhere)(sql);
+            return ChangeQuery(Query<R>)(WithWhere)(sql);
         }
         public static Func<string, Select<P, IEnumerable<R>>> Where<P, R>(string sql)
         {
-            return Change(Query<P, R>)(WithWhere)(sql);
+            return ChangeQuery(Query<P, R>)(WithWhere)(sql);
         }
         public static Select<P, R> QuerySingle<P, R>(string query)
         {

@@ -24,7 +24,7 @@ namespace dapper.fun.test
             // Wrong
             Select<int, IEnumerable<User>> find = Query<int, User>(User.Scripts.Find);
             Select<int> drop = Exec(User.Scripts.Drop);
-            Func<string, Select<IEnumerable<User>>> where = Change(Query<User>)(WithWhere)(User.Scripts.All);
+            Func<string, Select<IEnumerable<User>>> where = ChangeQuery(Query<User>)(WithWhere)(User.Scripts.All);
 
             IEnumerable<User> users;
 
@@ -44,7 +44,7 @@ namespace dapper.fun.test
         [TestMethod]
         public async Task TestWhereNoParams()
         {
-            var where = Change(Query<object>)(WithWhere)(
+            var where = ChangeQuery(Query<object>)(WithWhere)(
                 "WITH x AS (values(0,1,2,3,4)) select * from x"
             );
             Database.Drop();
@@ -61,7 +61,7 @@ namespace dapper.fun.test
         [TestMethod]
         public async Task TestWhereParams()
         {
-            var where = Change(Query<object, object>)(WithWhere)(
+            var where = ChangeQuery(Query<object, object>)(WithWhere)(
                 "WITH x AS (values(0,1,2,3,4)) select * from x"
             );
 
@@ -118,7 +118,7 @@ namespace dapper.fun.test
             Database.Drop();
             using (var connection = Database.Connect())
             {
-                Select<int, User> Find = Transform(
+                Select<int, User> Find = ChangeParameters(
                                 QuerySingle<object, User>(@"
                 -- SQLite
                 WITH x AS (values(1,'bob','password', 'admin')) 

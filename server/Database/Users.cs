@@ -16,11 +16,11 @@ namespace server.Database
             Select<int> create = Exec(User.Scripts.Create);
             Select<User, int> update = Exec<User>(User.Scripts.Update);
 
-            Select<int, User> find = Transform(
+            Select<int, User> find = ChangeParameters(
                 QuerySingle<object, User>(@"select * from User where id = @ID"),
-                (int ID) => new { ID }
+                (int id) => new { ID = id }
             );
-            
+
             var add = Scalar<User, int>(@"
                     insert into USER (
                         Name, Password, Roles
