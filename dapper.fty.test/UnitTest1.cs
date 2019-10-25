@@ -49,7 +49,9 @@ namespace dapper.fty.test
             IEnumerable<object> result;
             using (var cnx = Database.Connect())
             {
-                result = await where(" column2 = 1 ")(cnx, null)();
+                var withWhere = where(" column2 = 1 ");
+                var execWhere = withWhere(cnx, null);
+                result = await execWhere(); //no params
             }
             ((int)(((dynamic)result.FirstOrDefault()).column2)).Should().Be(1);
         }
