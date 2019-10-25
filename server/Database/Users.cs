@@ -1,4 +1,7 @@
+using System;
+using System.Collections.Generic;
 using System.Data;
+using dapper.fty;
 
 namespace server.Database
 {
@@ -6,7 +9,7 @@ namespace server.Database
 
     public class Users
     {
-        public static object D(IDbConnection connection, IDbTransaction transaction = null)
+        public static object Data()
         {
             var update = Exec<User>(@"
                     UPDATE User 
@@ -15,7 +18,7 @@ namespace server.Database
                             Roles = @Roles
                     where id = @id
                 ");
-            var get = Query<int, User>(@"select * from User where id = @ID");
+            var find = Query<int, User>(@"select * from User where id = @ID");
             var add = Scalar<User, int>(@"
                     insert into USER (
                         Name, Password, Roles
@@ -25,7 +28,7 @@ namespace server.Database
                     SELECT last_insert_rowid();
                 ");
 
-            var all = Query<User>("select * from user");
+            var all = Query<User>("select * from user");                      
             var delete = Exec(@"delete User where id = @id");
             var count = Scalar<int>("select count(*) from User ");
 
@@ -34,7 +37,7 @@ namespace server.Database
                 all: all,
                 count: count,
                 delete: delete,
-                get: get,
+                find: find,
                 update: update
             );
         }

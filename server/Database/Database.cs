@@ -29,7 +29,7 @@ namespace server.Database
                 await ExecuteFile(cnx)(Combine(Base, "User.Create.sqlite"));
                 await ExecuteFile(cnx)(Combine(Base, "Contact.Create.sqlite"));
 
-                var users = Users.D(cnx);
+                var users = Users.Data();
                 
                 // if (!(await users.all()).Any())
                 // {
@@ -41,7 +41,6 @@ namespace server.Database
                 //     });
                 // }
             }
-
         }
 
         private static Func<string, Task> ExecuteFile(IDbConnection cnx)

@@ -13,11 +13,16 @@ namespace dapper.fty.test
 
         static string Base => Combine(GetCurrentDirectory());
 
-        public static IDbConnection Connect()
+        public static void Drop()
         {
-            if(File.Exists(DBPath)) {
+            if (File.Exists(DBPath))
+            {
                 File.Delete(DBPath);
             }
+        }
+
+        public static IDbConnection Connect()
+        {
             return new SQLiteConnection("Data Source=" + DBPath);
         }
     }

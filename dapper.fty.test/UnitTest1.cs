@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,18 +8,25 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace dapper.fty.test
 {
     using static dapper.fty.Operations;
+    using static dapper.fty.Transforms;
+    using static dapper.fty.Queries;
     [TestClass]
     public class UnitTest1
     {
         [TestMethod]
         public async Task Test1()
         {
-            var create = Exec(User.Scripts.Create);
-            var insert = Exec<User>(User.Scripts.Insert);
-            var all = Query<User>(User.Scripts.All);
+            Select<int> create = Exec(User.Scripts.Create);
+            Select<User, int> insert = Exec<User>(User.Scripts.Insert);
+            Select<IEnumerable<User>> all = Query<User>(User.Scripts.All);
+            // Wrong
+            Select<int, IEnumerable<User>> find = Query<int, User>(User.Scripts.Find);
+            Select<int> drop = Exec(User.Scripts.Drop);
+            Func<string, Select<IEnumerable<User>>> where = Change(Query<User>)(WithWhere)(User.Scripts.All);
 
             IEnumerable<User> users;
 
+            Database.Drop();
             using (var cnx = Database.Connect())
             {
                 var r = await create(cnx, null)();
@@ -30,32 +38,39 @@ namespace dapper.fty.test
             user.Should().NotBeNull();
             user.Name.Should().Be("bob");
         }
-    }
-    class User
-    {
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public string Password { get; set; }
-        public string Roles { get; set; }
 
-        public class Scripts
+        [TestMethod]
+        public async Task TestWhereNoParams()
         {
-            public const string Create = @"
-    CREATE TABLE IF NOT EXISTS User (
-    ID int PRIMARY KEY,
-    Name TEXT NOT null,
-    Password TEXT NOT Null,
-    Roles TEXT Not Null
-)
-            ";
-            public const string Insert = @"
-    INSERT INTO USER (
-        Name, Password, Roles
-    ) VALUES (
-        @Name, @Password, @Roles
-    )
-            ";
-            public const string All = @"select * from User";
+            var where = Change(Query<object>)(WithWhere)(
+                "WITH x AS (values(0,1,2,3,4)) select * from x"
+            );
+            Database.Drop();
+            IEnumerable<object> result;
+            using (var cnx = Database.Connect())
+            {
+                result = await where(" column2 = 1 ")(cnx, null)();
+            }
+            ((int)(((dynamic)result.FirstOrDefault()).column2)).Should().Be(1);
         }
-    }    
+
+        [TestMethod]
+        public async Task TestWhereParams()
+        {
+            var where = Change(Query<object, object>)(WithWhere)(
+                "WITH x AS (values(0,1,2,3,4)) select * from x"
+            );
+
+            IEnumerable<object> result;
+
+            Database.Drop();
+            using (var cnx = Database.Connect())
+            {
+                result = await where(" column2 = @value ")(cnx, null)(new { value = 1 });
+            }
+
+           ((int)(((dynamic)result.FirstOrDefault()).column2)).Should().Be(1);
+        }
+    }
+
 }
