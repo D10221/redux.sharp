@@ -1,7 +1,7 @@
 using System.Data;
 using System.Data.SQLite;
 
-namespace dapper.fty.test
+namespace dapper.fun.test
 {
     using static System.IO.Path;
     using static System.IO.Directory;

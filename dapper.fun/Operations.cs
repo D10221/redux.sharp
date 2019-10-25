@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace dapper.fty
+namespace dapper.fun
 {
     using Dapper;
     using System;

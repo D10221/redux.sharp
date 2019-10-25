@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using dapper.fty;
+using dapper.fun;
 
 namespace server.Database
 {
-    using static dapper.fty.Operations;
+    using static dapper.fun.Operations;
 
     public class Users
     {

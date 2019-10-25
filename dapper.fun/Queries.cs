@@ -1,4 +1,4 @@
-namespace dapper.fty
+namespace dapper.fun
 {
     using System;
     using System.Collections.Generic;

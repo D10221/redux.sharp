@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace dapper.fty.test
+namespace dapper.fun.test
 {
-    using static dapper.fty.Operations;
-    using static dapper.fty.Transforms;
-    using static dapper.fty.Queries;
+    using static dapper.fun.Operations;
+    using static dapper.fun.Transforms;
+    using static dapper.fun.Queries;
     [TestClass]
     public class UnitTest1
     {

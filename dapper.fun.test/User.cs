@@ -1,4 +1,4 @@
-namespace dapper.fty.test
+namespace dapper.fun.test
 {
     class User
     {

@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\dapper.fty\dapper.fty.csproj" />
+    <ProjectReference Include="..\dapper.fun\dapper.fun.csproj" />
   </ItemGroup>
 
 </Project>
