@@ -9,4 +9,8 @@
     <PackageReference Include="System.Data.SQLite" Version="1.0.111.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\dapper.fty\dapper.fty.csproj" />
+  </ItemGroup>
+
 </Project>
