@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace dapper.fun.test
 {
-    using static dapper.fun.Operations;
+    using static dapper.fun.Selects;
 
     [TestClass]
     public class AutoNameTests

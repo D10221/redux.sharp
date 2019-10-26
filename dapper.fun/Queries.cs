@@ -3,7 +3,7 @@ namespace dapper.fun
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using static Operations;
+    using static Selects;
     using static Transforms;
 
     public class Queries

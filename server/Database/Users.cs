@@ -5,7 +5,7 @@ using dapper.fun;
 
 namespace server.Database
 {
-    using static dapper.fun.Operations;
+    using static dapper.fun.Selects;
     using static dapper.fun.Queries;
     using static dapper.fun.Transforms;
 

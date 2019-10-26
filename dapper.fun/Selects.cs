@@ -4,8 +4,10 @@ using System.Collections.Generic;
 
 namespace dapper.fun
 {
-
-    public class Operations
+    ///<summary>
+    /// They All select something
+    ///</summary>
+    public class Selects
     {
         public static Select<P, int> Exec<P>(QueryString query)
         {

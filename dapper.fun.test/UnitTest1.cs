@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace dapper.fun.test
 {
-    using static dapper.fun.Operations;
+    using static dapper.fun.Selects;
     using static dapper.fun.Transforms;
     using static dapper.fun.Queries;
     using static dapper.fun.Connects;
