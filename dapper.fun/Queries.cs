@@ -10,15 +10,15 @@ namespace dapper.fun
     {
         public static ChangeFty<string> WithWhere = w => query => $"{query} WHERE {w}";
 
-        public static Func<string, Select<IEnumerable<R>>> Where<R>(string sql)
+        public static Func<string, Select<IEnumerable<R>>> Where<R>(QueryString query)
         {
-            return ChangeQuery(Query<R>)(WithWhere)(sql);
+            return ChangeQuery(Query<R>)(WithWhere)(query);
         }
-        public static Func<string, Select<P, IEnumerable<R>>> Where<P, R>(string sql)
+        public static Func<string, Select<P, IEnumerable<R>>> Where<P, R>(QueryString query)
         {
-            return ChangeQuery(Query<P, R>)(WithWhere)(sql);
+            return ChangeQuery(Query<P, R>)(WithWhere)(query);
         }
-        public static Select<P, R> QuerySingle<P, R>(string query)
+        public static Select<P, R> QuerySingle<P, R>(QueryString query)
         {
             return (con, tran) => async p => {
                 var r = ( await Query<P, R>(query)(con, tran)(p));
@@ -29,7 +29,7 @@ namespace dapper.fun
                 return r.FirstOrDefault();
             };
         }
-        public static Select<R> QuerySingle<R>(string query)
+        public static Select<R> QuerySingle<R>(QueryString query)
         {
             return (con, tran) => async () => {
                 var r = ( await Query<R>(query)(con, tran)());

@@ -31,6 +31,6 @@ namespace dapper.fun
         public static Selector<R> Connect<R>(Select<R> select, IDbConnection connection, IDbTransaction transaction = null)
         {
             return select(connection, transaction);
-        }
+        }       
     }
 }
