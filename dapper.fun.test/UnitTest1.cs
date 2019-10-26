@@ -53,7 +53,9 @@ namespace dapper.fun.test
                 (new { ID =1 }))
                 .Should()
                 .BeEquivalentTo(new []{ 1 });
-                
+
+             // TODO:
+             // Type Switching Per Row
             }
         }
     }

@@ -5,7 +5,12 @@ using System.Collections.Generic;
 namespace dapper.fun
 {
     ///<summary>
-    /// They All select something
+    /// They All select something 
+    /// - TODO: Dapper features:
+    /// - Buffered
+    /// - TFirst/ TSecond, etc (Multi Mapping)
+    /// - Multiple Results 
+    /// - Store Procedures options
     ///</summary>
     public class Selects
     {
