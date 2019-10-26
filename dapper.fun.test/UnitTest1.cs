@@ -112,6 +112,23 @@ namespace dapper.fun.test
                 test(await QuerySingle<Values>(query)(connection, null)());
             }
         }
+        [TestMethod]
+        public async Task TestConnected()
+        {
+            using (var connection = Database.Connect())
+            {
+                var select1 = Connected(QuerySingle<int>("select 1"), connection);
+
+                var one = await select1();
+                one.Should().Be(1);
+                // Auto Named as @param
+                var select = Connected(QuerySingle<int, int>("select @param"), connection);
+
+                one = await select(1);
+                one.Should().Be(1);
+
+            }
+        }
 
         [TestMethod]
         public async Task TransformsParameters()
@@ -156,7 +173,7 @@ namespace dapper.fun.test
                 x.Should().Be(1);
                 x = await Connect(QuerySingle<int>((text, /*commandTimeout:*/ 30)))(connection)();
                 x.Should().Be(1);
-                x = await Connect(QuerySingle<int>((text, commandType: CommandType.Text)))(connection)();                
+                x = await Connect(QuerySingle<int>((text, commandType: CommandType.Text)))(connection)();
                 x.Should().Be(1);
                 x = await Connect(QuerySingle<int>((text, CommandType.Text)))(connection)();
                 x.Should().Be(1);
@@ -168,6 +185,6 @@ namespace dapper.fun.test
                 x.Should().Be(1);
             }
         }
-    }
 
+    }
 }

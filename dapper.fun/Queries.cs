@@ -20,20 +20,24 @@ namespace dapper.fun
         }
         public static Select<P, R> QuerySingle<P, R>(QueryString query)
         {
-            return (con, tran) => async p => {
-                var r = ( await Query<P, R>(query)(con, tran)(p));
-                if(r.Count() > 1) {
+            return (con, tran) => async p =>
+            {                
+                var r = (await Query<P, R>(query)(con, tran)(p));
+                if (r.Count() > 1)
+                {
                     // TODO: hides querie intention ? 
                     throw new Exception("You are expectin 1 but got many");
                 }
                 return r.FirstOrDefault();
             };
-        }
+        }        
         public static Select<R> QuerySingle<R>(QueryString query)
         {
-            return (con, tran) => async () => {
-                var r = ( await Query<R>(query)(con, tran)());
-                if(r.Count() > 1) {
+            return (con, tran) => async () =>
+            {
+                var r = (await Query<R>(query)(con, tran)());
+                if (r.Count() > 1)
+                {
                     // TODO: hides querie intention ? 
                     throw new Exception("You are expectin 1 but got many");
                 }

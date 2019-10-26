@@ -1,20 +1,9 @@
-﻿using System.Data;
+﻿using Dapper;
+using System;
+using System.Collections.Generic;
 
 namespace dapper.fun
 {
-    using Dapper;
-    using System;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-
-    public delegate Task<R> Selector<P, R>(P param);
-    public delegate Task<R> Selector<R>();
-
-    public delegate Selector<P, R> Select<P, R>(IDbConnection connection, IDbTransaction transaction);
-    public delegate Selector<R> Select<R>(IDbConnection connection, IDbTransaction transaction);
-
-    public delegate Select<P, R> SelectFty<P, R>(QueryString query);
-    public delegate Select<R> SelectFty<R>(QueryString query);
 
     public class Operations
     {
@@ -23,7 +12,7 @@ namespace dapper.fun
             return (connection, transaction) => (param) => SqlMapper.ExecuteAsync(
                 connection,
                 query,
-                param: param,
+                param: AutoName(param),
                 transaction: transaction,
                 commandTimeout: query.CommandTimeout,
                 commandType: query.CommandType
@@ -45,7 +34,7 @@ namespace dapper.fun
             return (connection, transaction) => (param) => SqlMapper.ExecuteScalarAsync<R>(
                 connection,
                 query,
-                param: param,
+                param: AutoName(param),
                 transaction: transaction,
                 commandTimeout: query.CommandTimeout,
                 commandType: query.CommandType
@@ -62,6 +51,16 @@ namespace dapper.fun
                 commandType: query.CommandType
                 );
         }
+        public static Select<P, IEnumerable<R>> Query<P, R>(QueryString query)
+        {
+            return (connection, transaction) => (param) => SqlMapper.QueryAsync<R>(
+                connection, query,
+                param: AutoName(param),
+                transaction: transaction,
+                commandTimeout: query.CommandTimeout,
+                commandType: query.CommandType
+                );
+        }
         public static Select<IEnumerable<R>> Query<R>(QueryString query)
         {
             return (connection, transaction) => () => SqlMapper.QueryAsync<R>(
@@ -73,15 +72,16 @@ namespace dapper.fun
                 commandType: query.CommandType
                 );
         }
-        public static Select<P, IEnumerable<R>> Query<P, R>(QueryString query)
+        public static object AutoName<P>(P param)
         {
-            return (connection, transaction) => (param) => SqlMapper.QueryAsync<R>(
-                connection, query,
-                param: param,
-                transaction: transaction,
-                commandTimeout: query.CommandTimeout,
-                commandType: query.CommandType
-                );
+            switch (typeof(P))
+            {
+                case Type p when p.IsPrimitive: return new { param };
+                case Type p when p.IsValueType: return new { param };
+                case Type p when p == typeof(string): return new { param };
+                case Type p when p == typeof(byte[]): return new { param };
+                default: return param;
+            }
         }
     }
 }
