@@ -9,7 +9,6 @@ namespace dapper.fun
     /// - TODO: Dapper features:
     /// - Buffered
     /// - TFirst/ TSecond, etc (Multi Mapping)
-    /// - Multiple Results 
     /// - Store Procedures options
     ///</summary>
     public partial class Selects
@@ -25,8 +24,6 @@ namespace dapper.fun
                 commandType: query.CommandType
                 );
         }
-
-
         public static Select<P, R> Scalar<P, R>(QueryString query)
         {
             return (connection, transaction) => (param) => SqlMapper.ExecuteScalarAsync<R>(
@@ -38,7 +35,6 @@ namespace dapper.fun
                 commandType: query.CommandType
                 );
         }
-
         public static Select<P, IEnumerable<R>> Query<P, R>(QueryString query)
         {
             return (connection, transaction) => (param) => SqlMapper.QueryAsync<R>(
