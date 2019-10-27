@@ -63,7 +63,7 @@ namespace dapper.fun.test
             Database.Drop();
             using (var connection = Database.Connect())
             {
-                Select<int, User> Find = ChangeParameters(
+                Select<int, User> Find = ChangeParam(
                                 QuerySingle<object, User>(@"
                 -- SQLite
                 WITH x AS (values(1,'bob','password', 'admin')) 

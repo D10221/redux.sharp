@@ -68,7 +68,7 @@ namespace dapper.fun
                 commandTimeout: query.CommandTimeout,
                 commandType: query.CommandType
                 );
-        }        
+        }
         public static Select<P, R> QuerySingle<P, R>(QueryString query)
         {
             return (connection, transaction) => (param) => SqlMapper.QuerySingleAsync<R>(
@@ -78,7 +78,7 @@ namespace dapper.fun
                 commandTimeout: query.CommandTimeout,
                 commandType: query.CommandType
                 );
-        }        
+        }
         public static Select<P, R> QuerySingleOrDefault<P, R>(QueryString query)
         {
             return (connection, transaction) => (param) => SqlMapper.QuerySingleOrDefaultAsync<R>(
@@ -99,6 +99,6 @@ namespace dapper.fun
                 case Type p when p == typeof(byte[]): return new { param };
                 default: return param;
             }
-        }        
+        }
     }
 }

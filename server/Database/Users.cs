@@ -16,7 +16,7 @@ namespace server.Database
             Select<int> create = Exec(User.Scripts.Create);
             Select<User, int> update = Exec<User>(User.Scripts.Update);
 
-            Select<int, User> find = ChangeParameters(
+            Select<int, User> find = ChangeParam(
                 QuerySingle<object, User>(@"select * from User where id = @ID"),
                 (int id) => new { ID = id }
             );

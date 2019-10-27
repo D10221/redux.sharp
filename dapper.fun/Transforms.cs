@@ -1,6 +1,7 @@
-namespace dapper.fun
+﻿namespace dapper.fun
 {
     using System;
+    using System.Threading.Tasks;
 
     public delegate T Change<T>(T i);
     public delegate Change<T> ChangeFty<T>(T i);
@@ -15,8 +16,13 @@ namespace dapper.fun
         {
             return transform => query => input => select(transform(input)(query));
         }
-        public static Select<O, R> ChangeParameters<P, R, O>(Select<P, R> select, Func<O, P> transform){
+        public static Select<O, R> ChangeParam<P, R, O>(Select<P, R> select, Func<O, P> transform)
+        {
             return (con, tran) => (value) => select(con, tran)(transform(value));
+        }
+        public static Select<P, X> ChangeResult<P, R, X>(Select<P, R> select, Func<Task<R>, Task<X>> transform)
+        {
+            return (con, tran) => (p) => transform(select(con, tran)(p));
         }
     }
 }
