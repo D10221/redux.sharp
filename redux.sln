@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "redux", "redux\redux.csproj", "{51DA12B0-AB89-437D-9DD0-68F1F88913A1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Redux.Sharp", "Redux.Sharp\Redux.Sharp.csproj", "{51DA12B0-AB89-437D-9DD0-68F1F88913A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "redux.test", "redux.test\redux.test.csproj", "{417790F8-92DF-49B1-8127-36D537A20F22}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Redux.Sharp.Test", "Redux.Sharp.Test\Redux.Sharp.Test.csproj", "{417790F8-92DF-49B1-8127-36D537A20F22}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
